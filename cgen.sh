@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Simple-ish C++ fast(er) class creation tool
-# by susikohmelo, aka. ljylhank
+creator="susikohmelo aka. ljylhank"
 version="1.0"
 
 
@@ -14,7 +14,7 @@ color_end="\e[0m"
 
 # Startup message
 echo -e $color_comment
-echo "-- Version ${version} --"
+echo "-- Version ${version} by ${creator} --"
 echo -e -n $color_startnote
 echo "# leave any of the fields in this script empty to stop adding to them"
 echo -e $color_end
@@ -52,6 +52,8 @@ MAIL=$(head -n 1 ${S_DIR}/42header-userinfo | tail -1);
 USER=$(head -n 2 ${S_DIR}/42header-userinfo | tail -1);
 ${S_DIR}/./42header-gen ${classname}.hpp ${USER} ${MAIL} > ${classname}.hpp;
 ${S_DIR}/./42header-gen ${classname}.cpp ${USER} ${MAIL} > ${classname}.cpp;
+echo > ${classname}.cpp;
+echo > ${classname}.hpp;
 
 
 # Starting header guard
@@ -63,7 +65,7 @@ echo >> ${classname}.hpp
 
 # Getting / setting includes
 echo -e $color_comment
-printf "# include <> or \" \" in the name\n"
+printf "# include <> or \"\" in the name\n"
 echo -e -n $color_end
 addnl=0
 linecount=1
