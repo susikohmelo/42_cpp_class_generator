@@ -3,7 +3,6 @@
 version="1.0"
 S_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-
 # Colors
 color_comment="\e[90m"
 color_startnote="\e[33m"
