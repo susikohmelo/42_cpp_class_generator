@@ -57,6 +57,7 @@ if [[ $args_present == 1 ]] && [[ $1 = "-info" ]]; then
 fi
 # Git pull if cgen is launched with -update option
 if [[ $args_present == 1 ]] && [[ $1 == "-update" ]]; then
+	git -C $S_DIR reset --hard origin/main
 	git -C $S_DIR pull
 	exit 0
 fi
