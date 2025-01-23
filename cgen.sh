@@ -13,6 +13,11 @@ color_update="\e[32m"
 color_end="\e[0m"
 
 
+# Run git fetch asynchronously.
+# This takes a while, so we don't want to wait for it
+git -C "${S_DIR}" fetch -q --depth 1 &
+
+
 # Boolean for if arguments were given
 if [ $# -eq 0 ]
 then
