@@ -3,12 +3,17 @@
 Poor man's 42 header generation
 -------------------------------
 by: susikohmelo aka. ljylhank
-
+          __ 
+  ^_^    / -
+=<0.<>=---_
+  \ /___\ |
+   V V  V V
 
 This program outputs a 42 header to stdout
 which you can easily redirect to a file.
 
 File-, username and email are taken as argument
+argv[1], [2] and [3] respectively
 */
 
 #include <unistd.h>

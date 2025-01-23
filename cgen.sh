@@ -1,7 +1,14 @@
 #!/bin/bash
 
 # Simple-ish C++ fast(er) class creation tool
-creator="susikohmelo aka. ljylhank"
+# -------------------------------
+# by: susikohmelo aka. ljylhank
+#           __ 
+#   ^_^    / -
+# =<0.<>=---_
+#   \ /___\ |
+#    V V  V V
+
 version="1.0"
 
 
@@ -14,7 +21,7 @@ color_end="\e[0m"
 
 # Startup message
 echo -e $color_comment
-echo "-- Version ${version} by ${creator} --"
+echo "-- Version ${version} --"
 echo -e -n $color_startnote
 echo "# leave any of the fields in this script empty to stop adding to them"
 echo -e $color_end
