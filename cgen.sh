@@ -7,6 +7,7 @@ color_comment="\e[90m"
 color_startnote="\e[33m"
 color_info="\e[96m"
 color_warning="\e[31m"
+color_update="\e[32m"
 color_end="\e[0m"
 
 # Boolean for if arguments were given
@@ -55,6 +56,11 @@ fi
 # Startup message
 echo -e $color_comment
 echo "-- Version ${version} --"
+gitversion=$(git status -uno | head -n 2 | tail -1 )
+if [[ $gitversion != "Your branch is up to date with 'origin/main'." ]]; then
+	echo -e -n $color_update
+	echo "an update is available! Use cgen -update to pull the newer version"
+fi
 echo -e -n $color_startnote
 echo "Use cgen -info to display more information and launch options"
 echo -e $color_end
@@ -138,7 +144,7 @@ printf "{\n" >> ${classname}.hpp
 
 # Public members
 echo -e $color_comment
-echo "# if the line ends with ); it will be added to .cpp as a function"
+echo "# lines ending with ');' are recognized as functions. Type 'e' for an empty line"
 echo -e -n $color_end
 addedsomething=0
 linecount=1;
@@ -150,6 +156,11 @@ do
 	if [ -z "$input" ]
 	then
 		break
+	fi
+	if [[ $input == "e" ]]
+	then
+		echo >> ${classname}.hpp
+		continue
 	fi
 
 	# if this is the first line, add 'public: ' first
@@ -166,10 +177,19 @@ do
 		then
 			cutinput=${input:0:-1}
 			printf "\n%s::%s\n" "${classname}" "${cutinput}" >> "${classname}.cpp"
+			printf "{\n}\n" >> "${classname}.cpp"
 		else
 			cutinput=$(echo ${input:0:-1} | cut -d\  -f2-)
 			firstfield=$(echo ${input:0:-1} | awk '{print $1}')
-			printf "\n%s %s::%s\n" "${firstfield}" "${classname}" "${cutinput}" >> "${classname}.cpp"
+			if [[ $firstfield == "const" ]]; then
+				secondfield=$(echo ${input:0:-1} | awk '{print $2}')
+				cutinput=$(echo ${cutinput} | cut -d\  -f2-)
+				printf "\n%s %s %s::%s\n" "${firstfield}" "${secondfield}" "${classname}" "${cutinput}" >> "${classname}.cpp"
+				printf "{\n}\n" >> "${classname}.cpp"
+			else
+				printf "\n%s %s::%s\n" "${firstfield}" "${classname}" "${cutinput}" >> "${classname}.cpp"
+				printf "{\n}\n" >> "${classname}.cpp"
+			fi
 		fi
 	fi
 
@@ -180,7 +200,7 @@ done
 
 # Private members
 echo -e $color_comment
-echo "# if the line ends with ); it will be added to .cpp as a function"
+echo "# lines ending with ');' are recognized as functions. Type 'e' for an empty line"
 echo -e -n $color_end
 addedsomething=0
 linecount=1;
@@ -192,6 +212,11 @@ do
 	if [ -z "$input" ]
 	then
 		break
+	fi
+	if [[ $input == "e" ]]
+	then
+		echo >> ${classname}.hpp
+		continue
 	fi
 
 	# if this is the first line, add 'private: ' first
@@ -205,7 +230,15 @@ do
 	if [[ "$input" == *");" ]]; then
 		cutinput=$(echo ${input:0:-1} | cut -d\  -f2-)
 		firstfield=$(echo ${input:0:-1} | awk '{print $1}')
-		printf "\n%s %s::%s\n" "${firstfield}" "${classname}" "${cutinput}" >> "${classname}.cpp"
+		if [[ $firstfield == "const" ]]; then
+			secondfield=$(echo ${input:0:-1} | awk '{print $2}')
+			cutinput=$(echo ${cutinput} | cut -d\  -f2-)
+			printf "\n%s %s %s::%s\n" "${firstfield}" "${secondfield}" "${classname}" "${cutinput}" >> "${classname}.cpp"
+			printf "{\n}\n" >> "${classname}.cpp"
+		else
+			printf "\n%s %s::%s\n" "${firstfield}" "${classname}" "${cutinput}" >> "${classname}.cpp"
+			printf "{\n}\n" >> "${classname}.cpp"
+		fi
 	fi
 
 	addedsomething=1
