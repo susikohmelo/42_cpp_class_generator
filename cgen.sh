@@ -59,7 +59,9 @@ fi
 # Git pull if cgen is launched with -update option
 if [[ $args_present == 1 ]] && [[ $1 == "-update" ]]; then
 	git -C $S_DIR reset --hard origin/main
-	git -C $S_DIR pull
+	echo -e -n $color_update
+	echo "cgen updated :D!"
+	echo -e $color_end
 	exit 0
 fi
 
