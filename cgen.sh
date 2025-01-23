@@ -1,29 +1,62 @@
 #!/bin/bash
 
-# Simple-ish C++ fast(er) class creation tool
-# -------------------------------
-# by: susikohmelo aka. ljylhank
-#           __ 
-#   ^_^    / -
-# =<0.<>=---_
-#   \ /___\ |
-#    V V  V V
-
 version="1.0"
-
 
 # Colors
 color_comment="\e[90m"
 color_startnote="\e[33m"
+color_info="\e[96m"
 color_warning="\e[31m"
 color_end="\e[0m"
+
+# Boolean for if arguments were given
+if [ $# -eq 0 ]
+then
+	args_present=0
+else
+	args_present=1
+fi
+
+# Display message if cgen is launched with the -info option
+if [[ $args_present == 1 ]] && [[ $1 = "-info" ]]; then
+	echo -e $color_comment
+	echo "-- Version ${version} --"
+	echo -e -n $color_info
+	echo "Simple-ish C++ fast(er) class creation tool"
+	echo "-------------------------------"
+	echo "by: susikohmelo aka. ljylhank"
+	echo "          __"
+	echo "  ^_^    / -"
+	echo "=<0.<>=---_"
+	echo "  \ /___\ |"
+	echo "   V V  V V"
+	echo -e $color_startnote
+	echo "Use cgen -update to pull the newest version"
+	echo
+	echo "Press enter on an empty prompt to skip"
+	echo "it or to stop adding more lines to it."
+	echo
+	echo "42header login / email can be changed by editing"
+	echo "the 42header-users file or by running install.sh"
+	echo "again. Do note that doing so appends yet another"
+	echo "alias in your .rc configs. Functionally it does"
+	echo "not matter, but it may make the file more messy"
+	echo -e $color_end
+	exit 0;
+fi
+# Git pull if cgen is launched with -update option
+if [[ $args_present == 1 ]] && [[ $1 == "-update" ]]; then
+	S_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+	git -C $S_DIR pull
+	exit 0
+fi
 
 
 # Startup message
 echo -e $color_comment
 echo "-- Version ${version} --"
 echo -e -n $color_startnote
-echo "# leave any of the fields in this script empty to stop adding to them"
+echo "Use cgen -info to display more information and launch options"
 echo -e $color_end
 
 
