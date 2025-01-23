@@ -59,8 +59,8 @@ MAIL=$(head -n 1 ${S_DIR}/42header-userinfo | tail -1);
 USER=$(head -n 2 ${S_DIR}/42header-userinfo | tail -1);
 ${S_DIR}/./42header-gen ${classname}.hpp ${USER} ${MAIL} > ${classname}.hpp;
 ${S_DIR}/./42header-gen ${classname}.cpp ${USER} ${MAIL} > ${classname}.cpp;
-echo > ${classname}.cpp;
-echo > ${classname}.hpp;
+echo >> ${classname}.cpp;
+echo >> ${classname}.hpp;
 
 
 # Starting header guard
@@ -132,10 +132,12 @@ do
 		if [[ "$input" == "${classname}("* ]] || [[ "$input" == "~${classname}("* ]]
 		then
 			cutinput=${input:0:-1}
+			printf "\n%s::%s\n" "${classname}" "${cutinput}" >> "${classname}.cpp"
 		else
 			cutinput=$(echo ${input:0:-1} | cut -d\  -f2-)
+			firstfield=$(echo ${input:0:-1} | awk '{print $1}')
+			printf "\n%s %s::%s\n" "${firstfield}" "${classname}" "${cutinput}" >> "${classname}.cpp"
 		fi
-		printf "\n%s::%s\n" "${classname}" "${cutinput}" >> "${classname}.cpp"
 	fi
 
 	addedsomething=1
@@ -169,7 +171,8 @@ do
 	# if input is a function, add the prototype to the .cpp file
 	if [[ "$input" == *");" ]]; then
 		cutinput=$(echo ${input:0:-1} | cut -d\  -f2-)
-		printf "\n%s::%s\n" "${classname}" "${cutinput}" >> "${classname}.cpp"
+		firstfield=$(echo ${input:0:-1} | awk '{print $1}')
+		printf "\n%s %s::%s\n" "${firstfield}" "${classname}" "${cutinput}" >> "${classname}.cpp"
 	fi
 
 	addedsomething=1
