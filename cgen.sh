@@ -1,7 +1,6 @@
 #!/bin/bash
 
 version="1.0"
-
 S_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Colors
