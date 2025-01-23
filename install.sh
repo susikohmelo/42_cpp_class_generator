@@ -13,15 +13,15 @@ read username;
 echo $email > 42header-userinfo
 echo $username >> 42header-userinfo
 
+SCRIPT_DIR=$(pwd)
 
 echo -e "\e[90m~ Compiling 42 header generation program.\e[0m"
 gcc 42header-gen.c -o 42header-gen
-chmod +x 42geader-gen
-chmod +x cgen.sh
+chmod +x "${SCRIPT_DIR}/42header-gen"
+chmod +x "${SCRIPT_DIR}/cgen.sh"
 
 
 echo -e "\e[90m~ Appending the cgen alias to .bashrc and .zshrc\e[0m"
-SCRIPT_DIR=$(pwd)
 printf "\nalias cgen=\"%s\"\n" "${SCRIPT_DIR}/cgen.sh" >> "${HOME}/./.bashrc"
 printf "\nalias cgen=\"%s\"\n" "${SCRIPT_DIR}/cgen.sh" >> "${HOME}/./.zshrc"
 

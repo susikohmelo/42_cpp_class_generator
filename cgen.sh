@@ -47,9 +47,11 @@ fi
 
 
 # Setting the 42 headers
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-${SCRIPT_DIR}/./42header-gen ${classname}.hpp > ${classname}.hpp;
-${SCRIPT_DIR}/./42header-gen ${classname}.cpp > ${classname}.cpp;
+S_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+MAIL=$(head -n 1 ${S_DIR}/42header-userinfo | tail -1);
+USER=$(head -n 2 ${S_DIR}/42header-userinfo | tail -1);
+${S_DIR}/./42header-gen ${classname}.hpp ${USER} ${MAIL} > ${classname}.hpp;
+${S_DIR}/./42header-gen ${classname}.cpp ${USER} ${MAIL} > ${classname}.cpp;
 
 
 # Starting header guard
