@@ -46,9 +46,15 @@ if [ -f "./${classname}.cpp" ] || [ -f "./${classname}.hpp" ]; then
 fi
 
 
+# Setting the 42 headers
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+${SCRIPT_DIR}/./42header-gen ${classname}.hpp > ${classname}.hpp;
+${SCRIPT_DIR}/./42header-gen ${classname}.cpp > ${classname}.cpp;
+
+
 # Starting header guard
 classheader=$(echo "${classname}_HPP" | tr '[:lower:]' '[:upper:]')
-echo "#ifndef $classheader" > ${classname}.hpp
+echo "#ifndef $classheader" >> ${classname}.hpp
 echo "# define $classheader" >> ${classname}.hpp
 echo >> ${classname}.hpp
 
@@ -78,7 +84,7 @@ then
 	echo >> ${classname}.hpp
 fi
 # Including our .hpp in the .cpp
-printf "#include \"${classname}.hpp\"\n" > ${classname}.cpp
+printf "#include \"${classname}.hpp\"\n" >> ${classname}.cpp
 
 
 # Write class + open bracket
