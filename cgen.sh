@@ -37,6 +37,8 @@ if [[ $args_present == 1 ]] && [[ $1 = "-info" ]]; then
 	echo "Press enter on an empty prompt to skip"
 	echo "it or to stop adding more lines to it."
 	echo
+	echo "type just 'e' on a member prompt for an empty line"
+	echo
 	echo "42header login / email can be changed by editing"
 	echo "the 42header-users file or by running install.sh"
 	echo "again. Do note that doing so appends yet another"
