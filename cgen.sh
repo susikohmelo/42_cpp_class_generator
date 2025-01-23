@@ -58,7 +58,7 @@ fi
 # Startup message
 echo -e $color_comment
 echo "-- Version ${version} --"
-gitversion=$(git -C $S_DIR status -uno | head -n 2 | tail -1 )
+gitversion=$(git -C "${S_DIR}" status -uno | head -n 2 | tail -1 )
 if [[ $gitversion != "Your branch is up to date with 'origin/main'." ]]; then
 	echo -e -n $color_update
 	echo "an update is available! Use cgen -update to pull the newer version"
