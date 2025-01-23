@@ -3,6 +3,7 @@
 version="1.0"
 S_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
+
 # Colors
 color_comment="\e[90m"
 color_startnote="\e[33m"
@@ -11,6 +12,7 @@ color_warning="\e[31m"
 color_update="\e[32m"
 color_end="\e[0m"
 
+
 # Boolean for if arguments were given
 if [ $# -eq 0 ]
 then
@@ -18,6 +20,7 @@ then
 else
 	args_present=1
 fi
+
 
 # Display message if cgen is launched with the -info option
 if [[ $args_present == 1 ]] && [[ $1 = "-info" ]]; then
