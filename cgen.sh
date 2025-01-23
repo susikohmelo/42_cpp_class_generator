@@ -1,6 +1,7 @@
 #!/bin/bash
 
 version="1.0"
+S_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Colors
 color_comment="\e[90m"
@@ -49,7 +50,6 @@ if [[ $args_present == 1 ]] && [[ $1 = "-info" ]]; then
 fi
 # Git pull if cgen is launched with -update option
 if [[ $args_present == 1 ]] && [[ $1 == "-update" ]]; then
-	S_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 	git -C $S_DIR pull
 	exit 0
 fi
@@ -58,7 +58,7 @@ fi
 # Startup message
 echo -e $color_comment
 echo "-- Version ${version} --"
-gitversion=$(git status -uno | head -n 2 | tail -1 )
+gitversion=$(git -C $S_DIR status -uno | head -n 2 | tail -1 )
 if [[ $gitversion != "Your branch is up to date with 'origin/main'." ]]; then
 	echo -e -n $color_update
 	echo "an update is available! Use cgen -update to pull the newer version"
@@ -95,7 +95,6 @@ fi
 
 
 # Setting the 42 headers
-S_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 MAIL=$(head -n 1 ${S_DIR}/42header-userinfo | tail -1);
 USER=$(head -n 2 ${S_DIR}/42header-userinfo | tail -1);
 ${S_DIR}/./42header-gen ${classname}.hpp ${USER} ${MAIL} > ${classname}.hpp;
