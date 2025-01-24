@@ -162,7 +162,7 @@ addedsomething=0
 linecount=1;
 while [ 1 ]
 do
-	printf "public member [line %d]: " "$linecount"
+	printf "public [line %d]: " "$linecount"
 	read input
 
 	if [ -z "$input" ]
@@ -218,7 +218,7 @@ addedsomething=0
 linecount=1;
 while [ 1 ]
 do
-	printf "private member [line %d]: " "$linecount"
+	printf "private [line %d]: " "$linecount"
 	read input
 
 	if [ -z "$input" ]
